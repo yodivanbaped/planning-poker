@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planning Poker - Room</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="room-container">
+    <!-- Header -->
+    <header class="room-header">
+      <div class="room-header-left">
+        <a href="/" class="back-link">&larr; Leave Room</a>
+      </div>
+      <div class="room-header-center">
+        <h1 class="room-title">Planning Poker</h1>
+        <div class="room-code">
+          Room: <span id="room-code-display">--------</span>
+          <button id="copy-room-code" class="btn-icon" title="Copy room code">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="room-header-right">
+        <span id="participant-name-display"></span>
+      </div>
+    </header>
+
+    <!-- Main Content - Two Column Layout -->
+    <main class="room-main">
+      <div class="room-columns">
+        <!-- Left Column - Story/JIRA -->
+        <div class="left-column">
+          <section class="story-section">
+            <div class="story-header">
+              <h2>Current Story</h2>
+            </div>
+            <div class="story-inputs">
+              <input 
+                type="text" 
+                id="story-title" 
+                class="story-title-input"
+                placeholder="Story title (e.g., JIRA-123: User authentication)"
+              >
+              <textarea 
+                id="story-description" 
+                class="story-description-input"
+                placeholder="Story description or acceptance criteria..."
+                rows="8"
+              ></textarea>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right Column - Participants, Cards, Actions -->
+        <div class="right-column">
+          <!-- Timer Section -->
+          <section class="timer-section">
+            <div class="timer-display">
+              <span id="timer-value">--</span>
+              <span class="timer-label">seconds</span>
+            </div>
+            <div class="timer-controls">
+              <select id="timer-duration" class="timer-select">
+                <option value="30">30s</option>
+                <option value="60" selected>60s</option>
+                <option value="90">90s</option>
+                <option value="120">2min</option>
+              </select>
+              <button id="start-timer-btn" class="btn btn-small">Start Timer</button>
+              <button id="stop-timer-btn" class="btn btn-small btn-outline hidden">Stop</button>
+            </div>
+          </section>
+
+          <!-- Participants Section -->
+          <section class="participants-section">
+            <h3>Participants <span id="participant-count">(0)</span></h3>
+            <div id="participants-list" class="participants-list">
+              <!-- Participants will be added dynamically -->
+            </div>
+          </section>
+
+          <!-- Cards Section -->
+          <section class="cards-section">
+            <h3>Your Vote</h3>
+            <div id="cards-container" class="cards-container">
+              <!-- Cards will be added dynamically -->
+            </div>
+          </section>
+
+          <!-- Results Section -->
+          <section id="results-section" class="results-section hidden">
+            <h3>Results</h3>
+            <div class="results-summary">
+              <div class="result-stat">
+                <span class="result-label">Average</span>
+                <span id="result-average" class="result-value">-</span>
+              </div>
+              <div class="result-stat">
+                <span class="result-label">Consensus</span>
+                <span id="result-consensus" class="result-value">-</span>
+              </div>
+            </div>
+            <div id="results-breakdown" class="results-breakdown">
+              <!-- Vote breakdown will be added dynamically -->
+            </div>
+          </section>
+
+          <!-- Action Buttons -->
+          <section class="actions-section">
+            <button id="reveal-btn" class="btn btn-primary btn-large">
+              Reveal Votes
+            </button>
+            <button id="reset-btn" class="btn btn-secondary btn-large hidden">
+              Reset for Next Story
+            </button>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Connection Status -->
+  <div id="connection-status" class="connection-status hidden">
+    <span class="status-dot"></span>
+    <span class="status-text">Reconnecting...</span>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/room.js"></script>
+</body>
+</html>
